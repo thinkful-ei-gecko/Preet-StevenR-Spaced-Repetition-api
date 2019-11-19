@@ -1,5 +1,6 @@
 'use strict';
 
+
 class _Node {
   constructor(value, next) {
     this.value = value;
@@ -100,7 +101,7 @@ class LinkedList {
     let newNode = new _Node(newValue, currNode.next);
     currNode.next = newNode;
   }
-  
+
   insertAt(newValue, position) {
     let count = 1;
     let currNode = this.head;
