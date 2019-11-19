@@ -1,4 +1,5 @@
 const express = require('express')
+const jsonParser = express.json()
 const LanguageService = require('./language-service')
 const { requireAuth } = require('../middleware/jwt-auth')
 
