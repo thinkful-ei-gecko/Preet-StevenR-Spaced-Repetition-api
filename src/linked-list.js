@@ -10,9 +10,11 @@ class LinkedList {
   constructor() {
     this.head = null;
   }
+
   insertFirst(item) {
     this.head = new _Node(item, this.head);
   }
+
   insertLast(item) {
     if (this.head === null) {
       this.insertFirst(item);
@@ -24,30 +26,26 @@ class LinkedList {
       tempNode.next = new _Node(item, null);
     }
   }
+
   find(item) {
-    // Start at the head
-    let currNode = this.head;
-    // If the list is empty
+    let currNode = this.head;// Start at head
     if (!this.head) {
       return null;
     }
-    // Check for the item
-    while (currNode.value !== item) {
-      /* Return null if it's the end of the list 
-         and the item is not on the list */
+    while (currNode.value !== item) {// Check for item
+      /* Return null if end of the list 
+         and item is not on the list */
       if (currNode.next === null) {
         return null;
       } else {
-        // Otherwise, keep looking
         currNode = currNode.next;
       }
     }
-    // Found it
     return currNode;
   }
+
   remove(item) {
-    // If the list is empty
-    if (!this.head) {
+    if (!this.head) {    // If the list is empty
       return null;
     }
     // If the node to be removed is head, make the next node head
@@ -55,14 +53,11 @@ class LinkedList {
       this.head = this.head.next;
       return;
     }
-    // Start at the head
-    let currNode = this.head;
-    // Keep track of previous
-    let previousNode = this.head;
+    let currNode = this.head; // Start at the head
+    let previousNode = this.head; // Keep track of previous
 
     while (currNode !== null && currNode.value !== item) {
-      // Save the previous node
-      previousNode = currNode;
+      previousNode = currNode;// Save the previous node
       currNode = currNode.next;
     }
     if (currNode === null) {
@@ -71,6 +66,7 @@ class LinkedList {
     }
     previousNode.next = currNode.next;
   }
+
   insertBefore(newValue, beforeTarget) {
     if (!this.head) {
       this.insertFirst(newValue);
@@ -79,8 +75,7 @@ class LinkedList {
     let previousNode = this.head;
 
     while (currNode !== null && currNode.value !== beforeTarget) {
-      // Save the previous node
-      previousNode = currNode;
+      previousNode = currNode; // Save the previous node
       currNode = currNode.next;
     }
     if (currNode === null) {
@@ -89,6 +84,7 @@ class LinkedList {
     }
     previousNode.next = new _Node(newValue, previousNode.next);
   }
+
   insertAfter(newValue, afterTarget) {
     if (!this.head) {
       this.insertFirst(newValue);
@@ -104,6 +100,7 @@ class LinkedList {
     let newNode = new _Node(newValue, currNode.next);
     currNode.next = newNode;
   }
+  
   insertAt(newValue, position) {
     let count = 1;
     let currNode = this.head;

@@ -65,9 +65,8 @@ languageRouter
   })
 
 languageRouter
-  .post('/guess', async (req, res, next) => {
-    // implement me
-    res.send('implement me!')
+  .post('/guess', jsonParser, async (req, res, next) => {
+    //implement 
   })
 
 module.exports = languageRouter
