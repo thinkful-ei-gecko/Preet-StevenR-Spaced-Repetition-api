@@ -1,6 +1,4 @@
 'use strict';
-
-
 class _Node {
   constructor(value, next) {
     this.value = value;
@@ -29,13 +27,11 @@ class LinkedList {
   }
 
   find(item) {
-    let currNode = this.head;// Start at head
+    let currNode = this.head;
     if (!this.head) {
       return null;
     }
-    while (currNode.value !== item) {// Check for item
-      /* Return null if end of the list 
-         and item is not on the list */
+    while (currNode.value !== item) {
       if (currNode.next === null) {
         return null;
       } else {
@@ -46,19 +42,18 @@ class LinkedList {
   }
 
   remove(item) {
-    if (!this.head) {    // If the list is empty
+    if (!this.head) {    
       return null;
     }
-    // If the node to be removed is head, make the next node head
     if (this.head.value === item) {
       this.head = this.head.next;
       return;
     }
-    let currNode = this.head; // Start at the head
-    let previousNode = this.head; // Keep track of previous
+    let currNode = this.head; 
+    let previousNode = this.head; 
 
     while (currNode !== null && currNode.value !== item) {
-      previousNode = currNode;// Save the previous node
+      previousNode = currNode;
       currNode = currNode.next;
     }
     if (currNode === null) {
@@ -76,7 +71,7 @@ class LinkedList {
     let previousNode = this.head;
 
     while (currNode !== null && currNode.value !== beforeTarget) {
-      previousNode = currNode; // Save the previous node
+      previousNode = currNode; 
       currNode = currNode.next;
     }
     if (currNode === null) {

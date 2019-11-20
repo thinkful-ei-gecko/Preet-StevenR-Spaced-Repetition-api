@@ -1,7 +1,7 @@
 const express = require('express')
 const jsonParser = express.json()
 const LanguageService = require('./language-service')
-const { LinkedList, _Node, toArray,  } = require('../linked-list');
+const { _Node, toArray,  } = require('../linked-list');
 const { requireAuth } = require('../middleware/jwt-auth')
 
 const languageRouter = express.Router()
@@ -46,7 +46,7 @@ languageRouter
   })
 
 languageRouter
-  .get('/head', async (req, res, next) => {//endpoint tested and works 
+  .get('/head', async (req, res, next) => {
     try{
       const [nextWord] = await LanguageService.getNextWord(
         req.app.get('db'),
@@ -75,24 +75,20 @@ languageRouter
       })
     }
     try{
-      // fetch user's words from database
       const words = await LanguageService.getLanguageWords(
         req.app.get('db'),
         req.language.id,
       )
-      // find start of user's word list
       const [{head}] = await LanguageService.getLanguageHead(
         req.app.get('db'),
         req.language.id,
       )
-      // create linked list of user's words
       const list = LanguageService.createLinkedList(words, head)      
       const [checkNextWord] = await LanguageService.checkGuess(
         req.app.get('db'),
         req.language.id
       )
       if(checkNextWord.translation === guess){
-        // If user's guess is correct, we update the memory value of the current word, the move the word an appropriate number of spaces back in the list, updating all affected nodes
         const newMemVal = list.head.value.memory_value * 2;
         list.head.value.memory_value = newMemVal;
         list.head.value.correct_count ++;
@@ -134,7 +130,6 @@ languageRouter
           isCorrect: true
         })
       } else {
-        // If user's guess is incorrect, we reset the memory value of the current word to 1 and move the word back 1 space, updating all affected nodes
         list.head.value.memory_value = 1;
         list.head.value.incorrect_count ++;
 
@@ -147,7 +142,6 @@ languageRouter
         }
         
         const temp = new _Node(list.head.value)
-        //console.log(`temp is: ${temp}`);
         temp.next = curr.next
         curr.next = temp
         list.head = list.head.next
@@ -155,7 +149,6 @@ languageRouter
         temp.value.next = temp.next.value.id
         
         await LanguageService.updateWordsTable(
-          // once our list is correct, we persist those changes to the databse
           req.app.get('db'),
           toArray(list),
           req.language.id,
