@@ -62,16 +62,19 @@ const LanguageService = {
       .groupBy('head')
       .where({language_id});
   },
-
+  
+  //creates ll of words and sets val of head and subsequent words 
   createLinkedList(words, head){
+    //finds the next word in list based on val of word
     const headObj = words.find(word => word.id === head);
     const headIndex = words.indexOf(headObj);
     const headNode = words.splice(headIndex,1);
     const list = new LinkedList();
-    list.insertLast(headNode[0]);
 
+    list.insertLast(headNode[0]);
     let nextId = headNode[0].next;
     let currentWord = words.find(word => word.id === nextId);
+
     list.insertLast(currentWord);
     nextId = currentWord.next;
     currentWord = words.find(word => word.id === nextId);
@@ -87,23 +90,24 @@ const LanguageService = {
     }
     return list;
   },
-
+  
+  //updates the array/ll, changes won't be persisted to db if an error occurs 
   updateWordsTable(db, words, language_id, total_score){
-    return db.transaction(async trx =>{
+    return db.transaction(async transaction =>{
       return Promise.all([
-        trx('language')
+        transaction('language')
         .where({id: language_id})
         .update({
           total_score,
           head: words[0].id
         }),
-        ...words.map((word, i) => {
+        ...words.map((word, i) => { //updates array/ll, by a transaction 
           if(i + 1 >= words.length){
             word.next = null;
           } else {
             word.next = words[i + 1].id;
           }
-          return trx('word')
+          return transaction('word')
             .where({id: word.id})
             .update({
               ...word
