@@ -8,3 +8,6 @@ module.exports = {
   JWT_SECRET: process.env.JWT_SECRET || 'change-this-secret',
   JWT_EXPIRY: process.env.JWT_EXPIRY || '3h',
 }
+
+
+// package json: "migrate:production": "env SSL=true DATABASE_URL=$(heroku config:get DATABASE_URL) npm run migrate"
