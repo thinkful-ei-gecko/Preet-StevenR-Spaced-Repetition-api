@@ -95,7 +95,7 @@ languageRouter//persist changes to db
       if(checkNextWord.translation === guess){
         const newMemVal = list.head.value.memory_value * 2;
         list.head.value.memory_value = newMemVal;
-        list.head.value.correct_count ++;
+        list.head.value.correct_count++;
       //move curr word back in the list 
         let curr = list.head
         let countDown = newMemVal
@@ -138,7 +138,7 @@ languageRouter//persist changes to db
       else {
         // else: users answer is correct, set mem val to curr word = 1
         list.head.value.memory_value = 1;
-        list.head.value.incorrect_count ++;
+        list.head.value.incorrect_count++;
 
         let curr = list.head
         //console.log(curr);
